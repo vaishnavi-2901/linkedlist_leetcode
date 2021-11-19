@@ -1,0 +1,72 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* findHalf(ListNode* head){
+        ListNode* fast = head; 
+        ListNode* slow = head;
+        while(fast->next!=NULL and fast->next->next!=NULL){
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        return slow; //mid pointer
+    }
+    ListNode* reverse(ListNode* head){
+        ListNode* curr = head;
+        ListNode* prev = NULL;
+        while(curr!=NULL){
+            ListNode* temp = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = temp;
+        }
+        return prev; 
+    }
+    bool isPalindrome(ListNode* head) {
+        if(head==nullptr) return true;
+        ListNode* find = findHalf(head);
+        ListNode* point = reverse(find->next);
+        ListNode* p1 = head;
+        ListNode* p2 = point;
+        bool res = true;
+        while(p2!=nullptr){
+            if(p1->val != p2->val) return false;
+            p1 = p1->next;
+            p2 = p2->next;
+        }
+        // cout<<point->val;
+        // find->next = 
+        find->next = reverse(point);
+        // while(head!=NULL) {
+        //     cout<<head->val;
+        //     head = head->next;
+        //     }
+        return res;
+    }
+    bool isPalindrome1(ListNode* head) {
+        vector<int> vec;
+        while(head!=NULL){
+            vec.push_back(head->val);
+            head=head->next;
+        }
+        int l =0 , r = vec.size()-1,f=1;
+        while(l<r){
+            if(vec[l]==vec[r]){
+                l++,r--;
+            }
+            else return false;
+        }
+        return true;
+        // if(head==NULL or head->next==NULL) return true;
+        // if(head)
+    }
+    
+};
